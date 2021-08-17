@@ -167,7 +167,19 @@ const Form = styled.div`
   }
 `;
 
+const Select = styled.div`
+  select {
+    height: 42px;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 18px;
+    font-size: 1.08rem;
+    padding: 0 12px;
+  }
+`;
+
 export {
-    GlobalStyles,
-    Form
+  GlobalStyles,
+  Form,
+  Select
 }

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import * as Styles from "./styles";
@@ -11,6 +11,8 @@ const App = () => {
 
   const [rate, setRate] = useState(1);
   const [pitch, setPitch] = useState(1);
+  const [voicesList, setVoiceslist] = useState([]);
+  const [voiceSelected, setVoiceSelected] = useState();
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const tellJoke = async () => {
@@ -25,12 +27,37 @@ const App = () => {
       utterance.text = data.joke;
       utterance.pitch = pitch;
       utterance.rate = rate;
+      utterance.voice = voiceSelected;
     } catch (error) {
       utterance.text = "Sorry, I am not in the mood today. Try again later";
     } finally {
       Synth.current.speak(utterance);
     }
   }
+
+  const handleVoiceChange = event => {
+    const voiceName = event.target.value;
+
+    const voice = voicesList.find(voice => voice.name === voiceName)
+
+    setVoiceSelected(voice);
+  }
+
+  // Populate List of voices available when first render
+  useEffect(() => {
+    const getVoices = () => {
+      const voices = Synth.current.getVoices().filter(voice => voice.lang.substring(0, 2) === "en");
+
+      setVoiceslist(voices);
+    }
+
+    // Firefox doesn't support SpeechSynthesis.onVoiceChanged and will just return a list of voices, so we can just call the function here
+    getVoices();
+    // For Chrome we need to wait for the onVoiceChanged event to fire before we can populate the list, so we set an event listener on the SpeechSynthesis.onvoiceschanged property
+    if (Synth.current.onvoiceschanged !== undefined) {
+      Synth.current.onvoiceschanged = getVoices
+    }
+  }, [])
 
   return (
     <>
@@ -53,6 +80,13 @@ const App = () => {
           <div className="badge">{pitch}</div>
           <input id="pitch" type="range" min="0" max="2" value={pitch} onChange={e => setPitch(e.target.value)} step="0.1" />
         </div>
+
+        {/* Select input */}
+        <Styles.Select>
+          <select onChange={handleVoiceChange}>
+            {voicesList.map(voice => <option key={voice.name}>{voice.name}</option>)}
+          </select>
+        </Styles.Select>
 
         <div className="buttons-container">
           <button disabled={isSpeaking} onClick={tellJoke}>Tell me a joke</button>

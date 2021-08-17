@@ -22,7 +22,7 @@ const App = () => {
     utterance.onend = () => setIsSpeaking(false);
 
     try {
-      const { data } = await axios.get("https://v2.jokeapi.dev/joke/Programming?type=single")
+      const { data } = await axios.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous?type=single")
 
       utterance.text = data.joke;
       utterance.pitch = pitch;

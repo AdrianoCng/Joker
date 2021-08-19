@@ -22,11 +22,21 @@ const GlobalStyles = createGlobalStyle`
 const Form = styled.form`
   width: 600px;
   margin: 6px auto;
-  padding: 50px;
+  padding: 18px;
   background: transparent;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    width: auto;
+
+    img {
+      max-width: 100%;
+      min-width: 300px;
+      height: auto;
+    }
+  }
 
   input[type=range] {
     height: 24px;

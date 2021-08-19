@@ -16,6 +16,10 @@ const GlobalStyles = createGlobalStyle`
     background-repeat: repeat-x;
     background-size: cover;
     background-position: 0 47vh;
+
+    @media (max-width: 425px) {
+      background-position: 0 22vh;
+    }
   };
 `;
 

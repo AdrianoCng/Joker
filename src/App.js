@@ -68,7 +68,7 @@ const App = () => {
   // Populate List of voices available when first render
   useEffect(() => {
     const getVoices = () => {
-      const voices = Synth.current.getVoices().filter(voice => voice.lang.substring(0, 2) === "en");
+      const voices = Synth.current.getVoices();
 
       setVoiceslist(voices);
     }

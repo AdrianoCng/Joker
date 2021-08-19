@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     background-color: #000;
-    background-image: ${props => props.speaking ? "url(/waves.gif)" : "#000"};
+    background-image: ${props => props.speaking && "url(/waves.gif)"};
     color: #fefefe;
     font-size: 1.15rem;
     background-repeat: repeat-x;

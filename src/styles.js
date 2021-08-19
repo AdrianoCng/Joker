@@ -150,7 +150,7 @@ const Form = styled.form`
     border-radius: 10px;
     border: none;
     margin: 0 auto;
-    margin-top: 38px;
+    margin-top: 30px;
     width: 175px;
     font-size: 1.3rem;
     cursor: pointer;

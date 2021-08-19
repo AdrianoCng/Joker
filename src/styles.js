@@ -166,6 +166,13 @@ const Form = styled.form`
     color: #141414;
     font-size: 1rem;
   }
+
+  span {
+    margin-top: 26px;
+    padding: 0 15px;
+    font-size: 0.85rem;
+    color: grey;
+  }
 `;
 
 const Select = styled.div`

@@ -120,6 +120,7 @@ const App = () => {
           <button disabled={!isSpeaking} onClick={stopTalking}>Stop</button>
           <button disabled={isSpeaking} onClick={tellJoke}>Tell me a joke</button>
         </div>
+        <span>Note: This app uses the Web Speech API which is experimental and may not fully work in some versions of certain browsers</span>
       </Styles.Form>
     </>
   );

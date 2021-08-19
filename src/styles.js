@@ -24,7 +24,6 @@ const Form = styled.form`
   margin: 6px auto;
   padding: 50px;
   background: transparent;
-  height: 475px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

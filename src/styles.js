@@ -19,9 +19,9 @@ const GlobalStyles = createGlobalStyle`
   };
 `;
 
-const Form = styled.div`
+const Form = styled.form`
   width: 600px;
-  margin: 50px auto;
+  margin: 6px auto;
   padding: 50px;
   background: transparent;
   height: 475px;
@@ -142,6 +142,7 @@ const Form = styled.div`
   .buttons-container {
     display: flex;
     justify-content: center;
+    gap: 24px;
   }
 
   button {
@@ -149,7 +150,7 @@ const Form = styled.div`
     border-radius: 10px;
     border: none;
     margin: 0 auto;
-    margin-top: 55px;
+    margin-top: 38px;
     width: 175px;
     font-size: 1.3rem;
     cursor: pointer;
@@ -178,8 +179,28 @@ const Select = styled.div`
   }
 `;
 
+const Textarea = styled.textarea`
+  max-width: 100%;
+  min-width: 100%;
+  width: 100%;
+  height: 150px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 1.1rem;
+  background: transparent;
+  color: white;
+  border: 1px inset white;
+  bow-shadow: 1px 1px 3px inset white;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 export {
   GlobalStyles,
   Form,
-  Select
+  Select,
+  Textarea
 }

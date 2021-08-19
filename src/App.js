@@ -8,31 +8,53 @@ import robot from "../src/img/eye.png";
 const App = () => {
   // Ref to the Web Speech API
   const Synth = useRef(window.speechSynthesis);
+  const utterance = useRef(new SpeechSynthesisUtterance());
 
+  const [text, setText] = useState("");
   const [rate, setRate] = useState(1);
   const [pitch, setPitch] = useState(1);
   const [voicesList, setVoiceslist] = useState([]);
   const [voiceSelected, setVoiceSelected] = useState();
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  const tellJoke = async () => {
-    const utterance = new SpeechSynthesisUtterance();
+  // Utterance settings
+  utterance.current.onstart = () => setIsSpeaking(true);
+  utterance.current.onend = () => {
+    setIsSpeaking(false);
+  }
+  utterance.current.pitch = pitch;
+  utterance.current.rate = rate;
+  utterance.current.voice = voiceSelected;
 
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
+  const tellJoke = async (event) => {
+    event.preventDefault();
 
     try {
       const { data } = await axios.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous?type=single")
 
-      utterance.text = data.joke;
-      utterance.pitch = pitch;
-      utterance.rate = rate;
-      utterance.voice = voiceSelected;
+      setText(data.joke);
+      utterance.current.text = data.joke;
+
     } catch (error) {
-      utterance.text = "Sorry, I am not in the mood today. Try again later";
+      utterance.current.text = "Sorry, I am not in the mood today. Try again later";
     } finally {
-      Synth.current.speak(utterance);
+      Synth.current.speak(utterance.current);
     }
+  }
+
+  const stopTalking = event => {
+    event.preventDefault();
+    Synth.current.cancel();
+  }
+
+  const handleOnSubmit = event => {
+    if (isSpeaking) return;
+
+    event.preventDefault()
+
+    utterance.current.text = text;
+
+    Synth.current.speak(utterance.current);
   }
 
   const handleVoiceChange = event => {
@@ -62,9 +84,14 @@ const App = () => {
   return (
     <>
       <Styles.GlobalStyles speaking={isSpeaking} />
-      <Styles.Form>
+      <Styles.Form onSubmit={handleOnSubmit}>
         <div className="img-container">
           <img src={robot} width="450px" alt="eye" />
+        </div>
+
+        {/* Textbox */}
+        <div>
+          <Styles.Textarea placeholder="Type anything..." onChange={(event) => setText(event.target.value)} value={text} />
         </div>
 
         {/* Rate input */}
@@ -89,8 +116,9 @@ const App = () => {
         </Styles.Select>
 
         <div className="buttons-container">
+          <button disabled={isSpeaking}>Speak</button>
+          <button disabled={!isSpeaking} onClick={stopTalking}>Stop</button>
           <button disabled={isSpeaking} onClick={tellJoke}>Tell me a joke</button>
-          <button disabled={!isSpeaking} onClick={() => Synth.current.cancel()}>Stop</button>
         </div>
       </Styles.Form>
     </>

@@ -185,6 +185,7 @@ const Form = styled.form`
     padding: 0 15px;
     font-size: 0.85rem;
     color: grey;
+    text-align: center;
   }
 `;
 

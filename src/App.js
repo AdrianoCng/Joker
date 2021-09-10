@@ -13,6 +13,7 @@ const App = () => {
   const [text, setText] = useState("");
   const [rate, setRate] = useState(1);
   const [pitch, setPitch] = useState(1);
+  const [volume, setVolume] = useState(1);
   const [voicesList, setVoiceslist] = useState([]);
   const [voiceSelected, setVoiceSelected] = useState();
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -24,6 +25,7 @@ const App = () => {
   }
   utterance.current.pitch = pitch;
   utterance.current.rate = rate;
+  utterance.current.volume = volume;
   utterance.current.voice = voiceSelected;
 
   const tellJoke = async (event) => {
@@ -106,6 +108,13 @@ const App = () => {
           <label htmlFor="pitch">Pitch</label>
           <div className="badge">{pitch}</div>
           <input id="pitch" type="range" min="0" max="2" value={pitch} onChange={e => setPitch(e.target.value)} step="0.1" />
+        </div>
+
+        {/* Volume input */}
+        <div>
+          <label htmlFor="volume">Volume</label>
+          <div className="badge">{volume}</div>
+          <input id="volume" type="range" min="0" max="1" value={volume} onChange={e => setVolume(e.target.value)} step="0.1" />
         </div>
 
         {/* Select input */}

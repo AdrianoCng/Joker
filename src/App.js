@@ -17,6 +17,7 @@ const App = () => {
   const [voicesList, setVoiceslist] = useState([]);
   const [voiceSelected, setVoiceSelected] = useState();
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isFetchingJoke, setIsFetchingJoke] = useState(false);
 
   // Utterance settings
   utterance.current.onstart = () => setIsSpeaking(true);
@@ -31,11 +32,15 @@ const App = () => {
   const tellJoke = async (event) => {
     event.preventDefault();
 
+    if (isSpeaking || isFetchingJoke) return;
+
     try {
+      setIsFetchingJoke(true);
       const { data } = await axios.get("https://v2.jokeapi.dev/joke/Programming,Miscellaneous?type=single")
 
       setText(data.joke);
       utterance.current.text = data.joke;
+      setIsFetchingJoke(false);
 
     } catch (error) {
       utterance.current.text = "Sorry, I am not in the mood today. Try again later";
@@ -50,13 +55,14 @@ const App = () => {
   }
 
   const handleOnSubmit = event => {
-    if (isSpeaking) return;
-
+    if (isSpeaking || isFetchingJoke) return;
+    setIsFetchingJoke(true);
     event.preventDefault()
 
     utterance.current.text = text;
 
     Synth.current.speak(utterance.current);
+    setIsFetchingJoke(false);
   }
 
   const handleVoiceChange = event => {

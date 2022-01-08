@@ -40,11 +40,11 @@ const App = () => {
 
       setText(data.joke);
       utterance.current.text = data.joke;
-      setIsFetchingJoke(false);
 
     } catch (error) {
       utterance.current.text = "Sorry, I am not in the mood today. Try again later";
     } finally {
+      setIsFetchingJoke(false);
       Synth.current.speak(utterance.current);
     }
   }

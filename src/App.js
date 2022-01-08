@@ -99,28 +99,28 @@ const App = () => {
 
         {/* Textbox */}
         <div>
-          <Styles.Textarea placeholder="Type anything..." onChange={(event) => setText(event.target.value)} value={text} />
+          <Styles.Textarea placeholder="Type anything..." disabled={isSpeaking} onChange={(event) => setText(event.target.value)} value={text} />
         </div>
 
         {/* Rate input */}
         <div>
           <label htmlFor="rate">Rate</label>
           <div className="badge">{rate}</div>
-          <input id="rate" type="range" min="0.1" max="2" step="0.1" value={rate} onChange={e => setRate(e.target.value)} />
+          <input id="rate" type="range" min="0.1" max="2" step="0.1" disabled={isSpeaking} value={rate} onChange={e => setRate(e.target.value)} />
         </div>
 
         {/* Pitch input */}
         <div>
           <label htmlFor="pitch">Pitch</label>
           <div className="badge">{pitch}</div>
-          <input id="pitch" type="range" min="0" max="2" value={pitch} onChange={e => setPitch(e.target.value)} step="0.1" />
+          <input id="pitch" type="range" min="0" max="2" disabled={isSpeaking} value={pitch} onChange={e => setPitch(e.target.value)} step="0.1" />
         </div>
 
         {/* Volume input */}
         <div>
           <label htmlFor="volume">Volume</label>
           <div className="badge">{volume}</div>
-          <input id="volume" type="range" min="0" max="1" value={volume} onChange={e => setVolume(e.target.value)} step="0.1" />
+          <input id="volume" type="range" min="0" max="1" disabled={isSpeaking} value={volume} onChange={e => setVolume(e.target.value)} step="0.1" />
         </div>
 
         {/* Select input */}
